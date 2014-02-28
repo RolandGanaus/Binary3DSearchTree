@@ -14,25 +14,27 @@ public class Binary3DSearchTree<E extends HasCoordinates> implements Iterable<E>
 
     private class Node {
         private E value;
+        private Node parent;
         private Node left;
         private Node right;
-        private int depth;
+        private int balance;
         
-        private Node(E e) {
+        private Node(E e, Node parent) {
             this.value = e;
+            this.parent = parent;
         }
         
         private void add(E e, char lastCriteria) {
             if (lastCriteria == 'x') {
                 if (e.getCoordinates().getY() > this.value.getCoordinates().getY()) {
                     if (this.right == null) {
-                        this.right = new Node(e);
+                        this.right = new Node(e, this);
                     } else {
                         this.right.add(e, 'y');
                     }
                 } else {
                     if (this.left == null) {
-                        this.left = new Node(e);
+                        this.left = new Node(e, this);
                     } else {
                         this.left.add(e, 'y');
                     }
@@ -40,13 +42,13 @@ public class Binary3DSearchTree<E extends HasCoordinates> implements Iterable<E>
             } else if (lastCriteria == 'y') {
                 if (e.getCoordinates().getZ() > this.value.getCoordinates().getZ()) {
                     if (this.right == null) {
-                        this.right = new Node(e);
+                        this.right = new Node(e, this);
                     } else {
                         this.right.add(e, 'z');
                     }
                 } else {
                     if (this.left == null) {
-                        this.left = new Node(e);
+                        this.left = new Node(e, this);
                     } else {
                         this.left.add(e, 'z');
                     }
@@ -54,13 +56,13 @@ public class Binary3DSearchTree<E extends HasCoordinates> implements Iterable<E>
             } else {
                 if (e.getCoordinates().getX()> this.value.getCoordinates().getX()) {
                     if (this.right == null) {
-                        this.right = new Node(e);
+                        this.right = new Node(e, this);
                     } else {
                         this.right.add(e, 'x');
                     }
                 } else {
                     if (this.left == null) {
-                        this.left = new Node(e);
+                        this.left = new Node(e, this);
                     } else {
                         this.left.add(e, 'x');
                     }
@@ -95,7 +97,7 @@ public class Binary3DSearchTree<E extends HasCoordinates> implements Iterable<E>
     
     public boolean add(E e) {
         if (root == null) {
-            root = new Node(e);
+            root = new Node(e, null);
         } else {
             root.add(e, 'x');
         }
