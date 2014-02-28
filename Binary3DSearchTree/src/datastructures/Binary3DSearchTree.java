@@ -16,6 +16,7 @@ public class Binary3DSearchTree<E extends HasCoordinates> implements Iterable<E>
         private E value;
         private Node left;
         private Node right;
+        private int depth;
         
         private Node(E e) {
             this.value = e;
