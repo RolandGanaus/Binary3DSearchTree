@@ -27,4 +27,15 @@ public class WorldObject implements HasCoordinates {
     public String toString() {
         return "(" + String.valueOf(this.id) + ")";
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        } else if (!(o instanceof WorldObject)) {
+            return false;
+        } else {
+            return ((WorldObject) o).id == this.id;
+        }
+    }
 }
