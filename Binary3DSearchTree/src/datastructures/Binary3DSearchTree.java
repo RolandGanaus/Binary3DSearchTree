@@ -70,11 +70,11 @@ public class Binary3DSearchTree<E extends HasCoordinates> implements Iterable<E>
     
     private class Binary3DSearchTreeIterator implements Iterator {
         
-        private Node node;
+        private Node last;
         
         @Override
         public boolean hasNext() {
-            if (this.node == null) {
+            if (this.last == null) {
                 return root != null ? true : false;
             } else {
                 return true;
@@ -83,7 +83,12 @@ public class Binary3DSearchTree<E extends HasCoordinates> implements Iterable<E>
         
         @Override
         public E next() {
-            return this.node.value;
+            if (this.last == null) {
+                return root != null ? root.value : null;
+            }
+            
+            
+            return this.last.value;
         }
         
         @Override
