@@ -71,7 +71,7 @@ public class Binary3DSearchTree<E extends HasCoordinates> implements Iterable<E>
         }
     }
     
-private class Binary3DSearchTreeIterator implements Iterator {
+    private class Binary3DSearchTreeIterator implements Iterator {
         
         private Node last;
         
