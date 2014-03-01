@@ -25,7 +25,7 @@ public class WorldObject implements HasCoordinates {
     
     @Override
     public String toString() {
-        return "(" + String.valueOf(this.id) + ")";
+        return String.valueOf(this.id);
     }
     
     @Override

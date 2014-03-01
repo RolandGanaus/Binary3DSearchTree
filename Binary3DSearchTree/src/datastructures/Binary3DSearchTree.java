@@ -69,6 +69,17 @@ public class Binary3DSearchTree<E extends HasCoordinates> implements Iterable<E>
                 }
             }
         }
+        
+        @Override
+        public String toString() {
+            String str = "(" + this.value.toString() + ", ";
+            str += this.left != null ? this.left.toString() : "";
+            str += ", ";
+            str += this.right != null ? this.right.toString() : "";
+            str += ")";
+            
+            return str;
+        }
     }
     
     private class Binary3DSearchTreeIterator implements Iterator {
@@ -78,18 +89,41 @@ public class Binary3DSearchTree<E extends HasCoordinates> implements Iterable<E>
         @Override
         public boolean hasNext() {
             if (this.last == null) {
-                return root != null ? true : false;
-            } else {
+                return root != null;
+            } else if ((this.last.left != null) ||
+                       (this.last.right != null)) {
                 return true;
+            } else {
+                return up(last) != null;
             }           
         }
         
         @Override
         public E next() {
             if (this.last == null) {
-                return root != null ? root.value : null;
+                this.last = root;
+            } else if (this.last.left != null) {
+                this.last = this.last.left;
+            } else if (this.last.right != null) {
+                this.last = this.last.right;
+            } else {
+                this.last = up(this.last);
             }
-            return this.last.value;
+            
+            return this.last != null ? this.last.value : null;
+        }
+        
+        private Node up(Node last) {
+            if (last.parent != null) {
+                if ((last.parent.right != null) && 
+                    (!last.parent.right.equals(last))) {
+                    return last.parent.right;
+                } else {
+                    return this.up(last.parent);
+                }
+            } else {
+                return null;
+            }
         }
         
         @Override
@@ -112,8 +146,17 @@ public class Binary3DSearchTree<E extends HasCoordinates> implements Iterable<E>
         
     }
     
+    @Override
     public Iterator iterator() {
         return new Binary3DSearchTreeIterator();
     }
     
+    @Override
+    public String toString() {
+        if (root != null) {
+            return root.toString();
+        } else {
+            return "";
+        }
+    }
 }
